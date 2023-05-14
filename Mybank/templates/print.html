@@ -1,0 +1,30 @@
+{%  extends 'welcome_page.html' %}
+
+
+
+{% block content %}
+<div class="container">
+    <div>
+  <h2 class="text-center text-white">Active Accounts</h2>
+    </div>
+<div class="mt-4">
+  <table class="table table-dark mt-4">
+    <thead>
+      <tr>
+        <th class="text-warning">Account Number</th>
+        <th class="text-success">balance</th>
+      </tr>
+    </thead>
+      {% for cons in print %}
+      <tr>
+        <th>1 {{cons.from_acc_number}}</th>
+        <th>2 {{cons.to_acc_number}}</th>
+        <th>3 {{cons.from_acc_number.balance}}</th>
+        <th>4 {{cons.from_acc_number.owner.username }}</th>
+        <th>5 {{cons.ammount}}€</th>
+      </tr>
+     </div>
+</div>
+
+  {% endfor %}
+{% endblock content %}

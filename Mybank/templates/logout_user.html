@@ -1,0 +1,18 @@
+{% extends 'welcome_page.html' %}
+
+{% block title %}Create an Account{% endblock %}
+
+{% block content %}
+<div class="container mt-5" xmlns="http://www.w3.org/1999/html">
+
+    <h3 class="text-white">You have been succesfully logged out</h3>
+<div class="border-top pt-3">
+            <small class="text-white">
+              Do you want to login?<strong><a class="ml-2 text-warning" href="{% url 'login_user' %}">login</a></strong>
+            </small>
+            <small class="text-white ml-4">
+              Need an Account? <strong><a class="ml-2 text-warning" href="{% url 'register_user' %}">Register</a></strong>
+                    </small>
+        </div>
+</div>
+{% endblock %}

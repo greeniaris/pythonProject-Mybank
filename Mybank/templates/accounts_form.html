@@ -1,0 +1,14 @@
+{% extends 'welcome_page.html' %}
+{% block content %}
+<div class="container mt-5">
+ <form method="GET" >
+        {% csrf_token %}
+     <fieldset class="form-group ml-5 text-white">
+          {{form.acc_number}}
+      <button type="submit" class="btn btn-success">create account</button>
+
+     </fieldset>
+
+    </form>
+</div>
+{% endblock content %}

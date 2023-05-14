@@ -1,0 +1,20 @@
+{% extends 'welcome_page.html' %}
+{% block content %}
+
+<div class="container mt-5">
+<form method="post">
+    {% csrf_token %}
+    <div class="text-white">
+    {{ form.acc_number.label_tag }}
+    {{ form.acc_number }}
+    </div>
+    <div class="text-white">
+    {{ form.balance.label_tag }}
+    {{ form.balance }}
+    </div>
+    <button type="submit">Submit</button>
+</form>
+</div>
+
+
+{% endblock content %}

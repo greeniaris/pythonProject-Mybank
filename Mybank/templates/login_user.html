@@ -1,0 +1,24 @@
+{% extends 'welcome_page.html' %}
+
+{% block title %}Create an Account{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    {% if user.is_authenticated%}
+    <div class="text-white"><h2>You are already logged in as {{user.username}}</h2></div>
+    <div class="text-white"><small>Do you want to loggout?<a href="{% url 'logout_user' %}">logout</a>
+    </small></div>
+    {% else %}
+    <form method="POST" class="form-group text-white">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">login</button>
+   </form>
+        <div class="border-top pt-3">
+            <small class="text-muted ">
+                Dont have account yet? <a class="ml-2 text-warning" href="{% url 'register_user' %}">Create profile</a>
+            </small>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

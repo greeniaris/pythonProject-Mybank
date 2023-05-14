@@ -1,0 +1,26 @@
+{% extends 'welcome_page.html' %}
+
+{% block content %}
+<div class="container">
+    <div>
+  <h2 class="text-center text-white">Active Accounts</h2>
+    </div>
+<div class="mt-4">
+  <table class="table table-dark mt-4">
+    <thead>
+      <tr>
+        <th class="text-warning">Account Number</th>
+        <th class="text-success">balance</th>
+      </tr>
+    </thead>
+      {% for obj in object %}
+      <tr>
+        <th>{{obj.acc_number}}</th>
+        <th>{{obj.balance}}€</th>
+      </tr>
+
+  </div>
+</div>
+
+  {% endfor %}
+{% endblock content %}

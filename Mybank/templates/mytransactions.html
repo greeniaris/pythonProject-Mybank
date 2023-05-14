@@ -1,0 +1,29 @@
+{% extends 'welcome_page.html' %}
+
+{% block content %}
+<div class="container">
+    <div>
+  <h2 class="text-center text-white">Active Accounts</h2>
+    </div>
+<div class="mt-4">
+  <table class="table table-dark mt-4">
+    <thead>
+      <tr>
+        <th class="text-warning">Sender</th>
+        <th class="text-success">Reciepient</th>
+        <th class="text-warning">amount</th>
+        <th class="text-warning">Date</th>
+      </tr>
+    </thead>
+      {% for object in object %}
+      <tr>
+          <th>{{object.sender_acc.owner}}-{{object.sender_acc.acc_number}}€</th>
+          <th>{{object.recipient_acc.owner}}-{{object.recipient_acc.acc_number}}</th>
+          <th>{{object.amount}}€</th>
+          <th>{{object.date}}€</th>
+      </tr>
+        {% endfor %}
+  </table>
+</div>
+</div>
+{% endblock content %}
