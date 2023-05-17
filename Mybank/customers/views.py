@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Accounts, Customers, Transactions
-from .forms import RegistrationForm, CreateAccountForm
+from .forms import RegistrationForm, CreateAccountForm , TransfermoneyForm
 from django.contrib import messages
 from django.db.models import Q
 
@@ -92,7 +92,7 @@ def send_balance(request):
 
     return render(request, 'transfer.html', context)
 
-
+@login_required()
 def my_transactions(request):
 
     user = request.user
@@ -104,3 +104,61 @@ def my_transactions(request):
     }
     return render(request, 'mytransactions.html', context)
 
+def account(request, acc_number):
+    query = Accounts.objects.get(acc_number = acc_number)
+    saw_me = Transactions.objects.filter((Q(sender_acc=query) | Q(recipient_acc=query)))
+    saw_me = saw_me.order_by('-date')
+    context = {
+        'object': query,
+        'trans' : saw_me,
+    }
+    return render(request, 'account.html', context=context)
+
+def send_moneys(request, acc_number):
+
+    form = TransfermoneyForm(initial={'sender_acc': acc_number})
+
+    if request.method == 'POST':
+        form = TransfermoneyForm(request.POST)
+        if form.is_valid():
+            if request.method == 'POST':
+                sender_account_number = request.POST['sender_acc']
+                recipient_account_number = request.POST['recepient_acc']
+                ammount = request.POST['ammount']
+                amount = float(ammount)
+                try:
+                    sender_account = Accounts.objects.get(acc_number=sender_account_number)
+                except Accounts.DoesNotExist:
+                    messages.error(request, 'Sender account number does not exist.')
+                    return redirect('transfer')
+
+                try:
+                    recipient_account = Accounts.objects.get(acc_number=recipient_account_number)
+                except Accounts.DoesNotExist:
+                    messages.error(request, 'Recipient account number does not exist.')
+                    return redirect('transfer')
+
+                if sender_account.balance >= amount and sender_account.owner == request.user:
+                    sender_account.balance -= amount
+                    recipient_account.balance += amount
+                    sender_account.save()
+                    recipient_account.save()
+                    trans_acc = Transactions(sender_acc=sender_account, recipient_acc=recipient_account, amount=amount)
+                    trans_acc.save()
+                    messages.success(request, f'{amount} successfully transferred to {recipient_account_number}')
+
+                else:
+                    messages.error(request, 'Λαθος στοιχεια')
+
+            # Get any messages that have been sent to the user
+            all_messages = messages.get_messages(request)
+
+            # Pass the messages to the template
+            context = {
+                'messages': all_messages,
+            }
+
+            return render(request, 'transfer.html', context)
+
+
+    return render(request, 'transfer_2.html', {'form': form})

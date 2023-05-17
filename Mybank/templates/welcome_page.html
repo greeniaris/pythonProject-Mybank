@@ -35,20 +35,25 @@
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">History</a>
+                <a class="nav-link" href="#">Η Τραπεζα μας</a>
             </li>
+            {% if user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'my_transactions' %}">My Transactions</a>
             </li>
         </ul>
+        {% endif %}
     </div>
+
     <div class="mx-auto order-0">
         <a class="navbar-brand mx-auto" href="{% url 'welcome_page' %}">Try Bank</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
             <span class="navbar-toggler-icon"></span>
         </button>
+
     </div>
     {% if user.is_authenticated %}
+
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">

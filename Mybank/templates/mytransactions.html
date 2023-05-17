@@ -17,10 +17,10 @@
     </thead>
       {% for object in object %}
       <tr>
-          <th>{{object.sender_acc.owner}}-{{object.sender_acc.acc_number}}€</th>
-          <th>{{object.recipient_acc.owner}}-{{object.recipient_acc.acc_number}}</th>
+          <th>{{object.sender_acc.acc_number}}</th>
+          <th>{{object.recipient_acc.acc_number}}</th>
           <th>{{object.amount}}€</th>
-          <th>{{object.date}}€</th>
+          <th>{{object.date}}</th>
       </tr>
         {% endfor %}
   </table>

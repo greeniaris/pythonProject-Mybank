@@ -17,3 +17,8 @@ class CreateAccountForm(forms.Form):
     balance = forms.FloatField()
 
 
+class TransfermoneyForm(forms.Form):
+
+    sender_acc = forms.CharField(initial='')
+    recepient_acc = forms.CharField(max_length=20)
+    ammount = forms.FloatField()

@@ -1,0 +1,50 @@
+{% extends 'welcome_page.html' %}
+
+{% block content %}
+<div class="container">
+    <div>
+  <h2 class="text-center text-white">Λογαριασμος</h2>
+    </div>
+<div class="mt-4">
+  <table class="table table-dark mt-4">
+    <thead>
+      <tr>
+        <th class="text-warning">Αριθμος Λογαριασμου</th>
+        <th class="text-success">Υπολοιπο</th>
+      </tr>
+    </thead>
+
+      <tr>
+        <th>{{object.acc_number}}</th>
+        <th>{{object.balance}}€</th>
+
+      </tr>
+
+    <div class="mt-4">
+
+  <table class="table table-dark mt-4">
+      <div>
+  <h2 class="text-center text-white">Συναλλαγες</h2>
+    </div>
+    <thead>
+      <tr>
+        <th class="text-warning">Αποστολεας</th>
+        <th class="text-success">Δεκτης</th>
+          <th class="text-warning">Ποσο</th>
+        <th class="text-warning">Ημ/νια</th>
+      </tr>
+    </thead>
+     {% for object in trans %}
+      <tr>
+          <th>{{object.sender_acc.acc_number}}</th>
+          <th>{{object.recipient_acc.acc_number}}</th>
+          <th>{{object.amount}}€</th>
+          <th>{{object.date}}</th>
+      </tr>
+        {% endfor %}
+
+  </div>
+</div>
+
+
+{% endblock content %}
