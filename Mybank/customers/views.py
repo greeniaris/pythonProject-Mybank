@@ -9,6 +9,9 @@ from django.db.models import Q
 def welcome(request):
     return render(request, 'welcome.html')
 
+def our_bank(request):
+    return render(request, 'our_bank.html')
+
 
 def register_user(request):
     if request.method == 'POST':
@@ -68,6 +71,10 @@ def send_balance(request):
             recipient_account = Accounts.objects.get(acc_number=recipient_account_number)
         except Accounts.DoesNotExist:
             messages.error(request, 'Recipient account number does not exist.')
+            return redirect('transfer')
+
+        if sender_account_number == recipient_account_number:
+            messages.error(request, 'Recipient account number must be different')
             return redirect('transfer')
 
         if sender_account.balance >= amount and sender_account.owner == request.user:
