@@ -145,6 +145,10 @@ def send_moneys(request, acc_number):
                     messages.error(request, 'Recipient account number does not exist.')
                     return redirect('transfer')
 
+                if sender_account_number == recipient_account_number:
+                    messages.error(request, 'Recipient account number must be different')
+                    return redirect('transfer')
+
                 if sender_account.balance >= amount and sender_account.owner == request.user:
                     sender_account.balance -= amount
                     recipient_account.balance += amount
