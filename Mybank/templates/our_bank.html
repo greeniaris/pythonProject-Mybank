@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'welcome_page.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="text-center text-white ">
+        <h3>This is our Bank</h3>
+    </div>
+    </div>
+    <h1 class="text-center text-warning">Here you can:</h1>
+<div class="container">
+   <ul class="list-group">
+  <li class="list-group-item list-group-item-success">Create Users</li>
+  <li class="list-group-item list-group-item-info">Create as many accounts you want per User</li>
+  <li class="list-group-item list-group-item-warning">Send money between Accounts</li>
+       <li class="list-group-item list-group-item-danger">Why dont you try yourself by registering a new User here -><a href="{% url 'register_user' %}" ><button type="button" class="btn btn-outline-success">Register</button></li></a>
+</ul>
+
+</div>
+</div>
+{% endblock content%}
