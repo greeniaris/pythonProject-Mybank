@@ -17,8 +17,8 @@
       <tr>
         <th>{{obj.acc_number}}</th>
         <th>{{obj.balance}}€</th>
-        <th><a href="http://127.0.0.1:8000/profile/{{obj.acc_number}}"<button type="button" class="btn btn-outline-warning">Προβολη Συναλλαγων</button></th>
-        <th><a href="http://127.0.0.1:8000/profile/{{obj.acc_number}}/transfer"<button type="button" class="btn btn-outline-warning">Νεα Συναλλαγη</button></th>
+        <th><a href="{% url 'account' obj.acc_number %}"<button type="button" class="btn btn-outline-warning">Προβολη Συναλλαγων</button></th>
+        <th><a href="{% url 'transfer2' obj.acc_number %}"<button type="button" class="btn btn-outline-warning">Νεα Συναλλαγη</button></th>
 
       </tr>
 
