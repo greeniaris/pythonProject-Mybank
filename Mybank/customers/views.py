@@ -4,6 +4,7 @@ from .models import Accounts, Customers, Transactions
 from .forms import RegistrationForm, CreateAccountForm , TransfermoneyForm
 from django.contrib import messages
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 
 def welcome(request):
@@ -100,13 +101,16 @@ def send_balance(request):
     return redirect('transfer3')
 @login_required()
 def my_transactions(request):
-
     user = request.user
     sender = Accounts.objects.filter(owner= user).all()
     saw_me = Transactions.objects.filter((Q(sender_acc__in=sender) | Q(recipient_acc__in=sender)))
     saw_me = saw_me.order_by('-date')
+    paginator = Paginator(saw_me, per_page=10)
+    page_number = request.GET.get('page', 1)
+    pagin = paginator.get_page(page_number)
     context = {
-        'object' : saw_me
+
+        'pagin' : pagin,
     }
     return render(request, 'mytransactions.html', context)
 
@@ -114,9 +118,11 @@ def account(request, acc_number):
     query = Accounts.objects.get(acc_number = acc_number)
     saw_me = Transactions.objects.filter((Q(sender_acc=query) | Q(recipient_acc=query)))
     saw_me = saw_me.order_by('-date')
+    paginator = Paginator(saw_me, per_page=10)
+    page_number = request.GET.get('page', 1)
+    pagin = paginator.get_page(page_number)
     context = {
-        'object': query,
-        'trans' : saw_me,
+        'pagin' : pagin
     }
     return render(request, 'account.html', context=context)
 

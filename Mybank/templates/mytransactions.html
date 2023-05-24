@@ -15,7 +15,7 @@
         <th class="text-warning">Date</th>
       </tr>
     </thead>
-      {% for object in object %}
+      {% for object in pagin %}
       <tr>
           <th>{{object.sender_acc.acc_number}}</th>
           <th>{{object.recipient_acc.acc_number}}</th>
@@ -23,7 +23,29 @@
           <th>{{object.date}}</th>
       </tr>
         {% endfor %}
-  </table>
+      </table>
+
+<nav aria-label="...">
+  <ul class="pagination mt-3">
+      {% if pagin.has_previous%}
+     <li class="page-item">
+      <a class="page-link" href="?page={{pagin.previous_page_number}}">Προηγούμενο</a>
+       </li>
+    <li class="page-item"><a class="page-link" href="?page={{pagin.previous_page_number}}">{{pagin.previous_page_number}}</a></li>
+      {% endif %}
+<li class="page-item active">
+      <span class="page-link">{{pagin.number}}
+        <span class="sr-only">(current)</span>
+      </span>
+</li>
+    {% if pagin.has_next%}
+    <li class="page-item"><a class="page-link" href="?page={{pagin.next_page_number}}">{{pagin.next_page_number}}</a></li>
+     <li class="page-item">
+      <a class="page-link" href="?page={{pagin.next_page_number}}">Επόμενο</a>
+       </li>
+    {% endif %}
+  </ul>
+</nav>
 </div>
 </div>
 {% endblock content %}
