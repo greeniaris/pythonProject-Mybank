@@ -9,6 +9,7 @@ from django.db.models import Q
 def welcome(request):
     return render(request, 'welcome.html')
 
+
 def our_bank(request):
     return render(request, 'our_bank.html')
 
@@ -53,6 +54,12 @@ def profile_page(request):
     }
     return render(request, 'user_profile.html', context=context)
 
+def send_balance_form(request):
+    my_acc = Accounts.objects.filter(owner=request.user)
+    context = {
+        'object' : my_acc
+    }
+    return render(request, 'transfer3.html', context)
 
 @login_required
 def send_balance(request):
@@ -71,11 +78,11 @@ def send_balance(request):
             recipient_account = Accounts.objects.get(acc_number=recipient_account_number)
         except Accounts.DoesNotExist:
             messages.error(request, 'Recipient account number does not exist.')
-            return redirect('transfer')
+            return redirect('transfer3')
 
         if sender_account_number == recipient_account_number:
             messages.error(request, 'Recipient account number must be different')
-            return redirect('transfer')
+            return redirect('transfer3')
 
         if sender_account.balance >= amount and sender_account.owner == request.user:
             sender_account.balance -= amount
@@ -84,21 +91,13 @@ def send_balance(request):
             recipient_account.save()
             trans_acc = Transactions(sender_acc= sender_account, recipient_acc= recipient_account, amount= amount)
             trans_acc.save()
-            messages.success(request, f'{amount} successfully transferred to {recipient_account_number}')
+            messages.success(request, f'{amount}€ successfully transferred to {recipient_account_number}')
+            return redirect('transfer3')
 
         else:
             messages.error(request, 'Λαθος στοιχεια')
-
-    # Get any messages that have been sent to the user
-    all_messages = messages.get_messages(request)
-
-    # Pass the messages to the template
-    context = {
-            'messages': all_messages,
-        }
-
-    return render(request, 'transfer.html', context)
-
+        return redirect('transfer3')
+    return redirect('transfer3')
 @login_required()
 def my_transactions(request):
 
@@ -122,7 +121,6 @@ def account(request, acc_number):
     return render(request, 'account.html', context=context)
 
 def send_moneys(request, acc_number):
-
     form = TransfermoneyForm(initial={'sender_acc': acc_number})
 
     if request.method == 'POST':
@@ -170,6 +168,5 @@ def send_moneys(request, acc_number):
             }
 
             return render(request, 'transfer.html', context)
-
 
     return render(request, 'transfer_2.html', {'form': form})

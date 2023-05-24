@@ -13,6 +13,6 @@ urlpatterns = [
     path('profile/',views.profile_page, name= 'user_profile'),
     path('profile/<str:acc_number>/', views.account, name='account'),
     path('profile/<str:acc_number>/transfer', views.send_moneys, name='transfer2'),
-    path('send_money/', views.send_balance, name='transfer'),
     path('my_transactions/',views.my_transactions, name= 'my_transactions'),
+    path('send_money/', views.send_balance_form, name='transfer3'),
 ]
