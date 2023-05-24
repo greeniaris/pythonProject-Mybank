@@ -29,4 +29,4 @@ class Transactions(models.Model):
     date = models.DateTimeField(auto_now_add=True,null=True, blank=True)
 
     def __str__(self):
-        return f"{self.sender_acc} to {self.recipient_acc} Ammount {self.amount}"
+        return f"from{self.sender_acc} to {self.recipient_acc} Ammount {self.amount}"
