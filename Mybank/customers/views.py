@@ -72,7 +72,7 @@ def send_balance(request):
             sender_account = Accounts.objects.get(acc_number=sender_account_number)
         except Accounts.DoesNotExist:
             messages.error(request, 'Sender account number does not exist.')
-            return redirect('transfer')
+            return redirect('transfer3')
 
         try:
             recipient_account = Accounts.objects.get(acc_number=recipient_account_number)
