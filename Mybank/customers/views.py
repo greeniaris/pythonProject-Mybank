@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from .models import Accounts, Customers, Transactions
 from .forms import RegistrationForm, CreateAccountForm , TransfermoneyForm
@@ -122,6 +122,7 @@ def account(request, acc_number):
     page_number = request.GET.get('page', 1)
     pagin = paginator.get_page(page_number)
     context = {
+        'object': query,
         'pagin' : pagin
     }
     return render(request, 'account.html', context=context)
@@ -141,17 +142,17 @@ def send_moneys(request, acc_number):
                     sender_account = Accounts.objects.get(acc_number=sender_account_number)
                 except Accounts.DoesNotExist:
                     messages.error(request, 'Sender account number does not exist.')
-                    return redirect('transfer')
+                    return redirect(reverse('transfer2', args=[acc_number]))
 
                 try:
                     recipient_account = Accounts.objects.get(acc_number=recipient_account_number)
                 except Accounts.DoesNotExist:
                     messages.error(request, 'Recipient account number does not exist.')
-                    return redirect('transfer')
+                    return redirect(reverse('transfer2', args=[acc_number]))
 
                 if sender_account_number == recipient_account_number:
                     messages.error(request, 'Recipient account number must be different')
-                    return redirect('transfer')
+                    return redirect(reverse('transfer2', args=[acc_number]))
 
                 if sender_account.balance >= amount and sender_account.owner == request.user:
                     sender_account.balance -= amount
@@ -161,18 +162,10 @@ def send_moneys(request, acc_number):
                     trans_acc = Transactions(sender_acc=sender_account, recipient_acc=recipient_account, amount=amount)
                     trans_acc.save()
                     messages.success(request, f'{amount} successfully transferred to {recipient_account_number}')
+                    return redirect(reverse('account', args=[acc_number]))
 
                 else:
                     messages.error(request, 'Λαθος στοιχεια')
 
-            # Get any messages that have been sent to the user
-            all_messages = messages.get_messages(request)
 
-            # Pass the messages to the template
-            context = {
-                'messages': all_messages,
-            }
-
-            return render(request, 'transfer.html', context)
-
-    return render(request, 'transfer_2.html', {'form': form})
+    return render(request, 'transfer_2.html',{'form':form})

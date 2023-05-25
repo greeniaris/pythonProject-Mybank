@@ -1,11 +1,23 @@
 {%  extends 'welcome_page.html' %}
-
 {% block content %}
+
+
 <div class="container">
+
+
     <div class="text-white">
    <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Submit</button>
 </form>
-{% endblock %}
+
+       {% for message in messages %}
+    <div class="alert my-message-alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+  {% endfor %}
+
+
+
+{% endblock content %}
