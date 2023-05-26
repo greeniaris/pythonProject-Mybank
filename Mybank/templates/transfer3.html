@@ -23,8 +23,20 @@
       <label for="amount">Amount</label>
       <input type="number" class="form-control" id="amount" name="amount" step="0.01">
     </div>
-      <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure?')"/>send Balance</button>
+      <button type="submit" class="btn btn-primary" onclick="return confirm('You are going to send to ' + document.getElementById('recipient_account_number').value + '\nAre you sure u want to continue?')">send Balance</button>
 </form>
+      <style>
+    .confirm-dialog {
+        width: 400px;
+    }
+</style>
+
+<script>
+    function customConfirm(message) {
+        const confirmation = window.confirm(message);
+        return confirmation;
+    }
+</script>
 
       <div>
           <div>
@@ -39,6 +51,7 @@
       </div>
   </div>
 </div>
+
 
 
       {% endblock content %}
