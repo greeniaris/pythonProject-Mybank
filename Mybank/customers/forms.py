@@ -14,11 +14,11 @@ class RegistrationForm(UserCreationForm):
 class CreateAccountForm(forms.Form):
 
     acc_number = forms.CharField(initial='MB000'+get_random_string(length=15,allowed_chars="1234567890"))
-    balance = forms.FloatField()
+    balance = forms.DecimalField(decimal_places=2)
 
 
 class TransfermoneyForm(forms.Form):
 
     sender_acc = forms.CharField(initial='')
     recepient_acc = forms.CharField(max_length=20)
-    ammount = forms.FloatField()
+    ammount = forms.DecimalField(decimal_places=2)

@@ -12,8 +12,12 @@
   <li class="list-group-item list-group-item-success">Create Users</li>
   <li class="list-group-item list-group-item-info">Create as many accounts you want per User</li>
   <li class="list-group-item list-group-item-warning">Send money between Accounts</li>
-       <li class="list-group-item list-group-item-danger">Why dont you try yourself by registering a new User here -><a href="{% url 'register_user' %}" ><button type="button" class="btn btn-outline-success">Register</button></li></a>
-</ul>
+       {% if user.is_authenticated %}
+       <li class="list-group-item list-group-item-danger">Why dont you try yourself by creating an account -><a href="{% url 'create_account' %}" ><button type="button" class="btn btn-outline-success">Create Account</button></li></a>
+       {% else %}
+  <li class="list-group-item list-group-item-danger">Why dont you try yourself by registering a new User here -><a href="{% url 'register_user' %}" ><button type="button" class="btn btn-outline-success">Register</button></li></a>
+        {% endif %}
+   </ul>
 
 </div>
 </div>
