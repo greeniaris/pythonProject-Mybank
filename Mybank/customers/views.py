@@ -38,8 +38,13 @@ def create_account(request):
             # Create a new object in the database
             create_obj = Accounts(owner=request.user, acc_number=form.cleaned_data['acc_number'],\
                                   balance=form.cleaned_data['balance'])
-            create_obj.save()
-            return redirect('user_profile')
+            if Accounts.objects.filter(acc_number=form.cleaned_data['acc_number']).exists():
+                messages.error(request,f"account already exists")
+                form = CreateAccountForm
+            else:
+                create_obj.save()
+                messages.success(request, f"succesfully created account {create_obj.acc_number} with {create_obj.balance}")
+                return redirect('user_profile')
     else:
         form = CreateAccountForm()
     return render(request, 'create_account.html', {'form': form})
