@@ -12,14 +12,4 @@
   <button type="submit" class="btn btn-primary" onclick="return confirm('You are going to send to ' + document.getElementById('{{ form.recepient_acc.auto_id }}').value + '\nAre you sure u want to continue?')">send Balance</button>
 </form>
 
-
-
-       {% for message in messages %}
-    <div class="alert my-message-alert alert-{{ message.tags }}">
-      {{ message }}
-    </div>
-  {% endfor %}
-
-
-
 {% endblock content %}

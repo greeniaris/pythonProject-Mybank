@@ -1,5 +1,5 @@
 {% extends 'welcome_page.html' %}
-
+{% load crispy_forms_tags %}
 {% block title %}Create an Account{% endblock %}
 
 {% block content %}
@@ -9,9 +9,9 @@
         <strong><H1>We are sorry but you cant create and account when you are logged in</H1></strong>
     </div>
     {% else %}
-    <form method="POST" class="form-group text-white">
+    <form method="POST" class="form-group text-warning ">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button type="submit" class="btn btn-success">Register</button>
     </form>
 <div class="border-top pt-3">
