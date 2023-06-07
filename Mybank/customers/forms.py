@@ -16,6 +16,9 @@ class CreateAccountForm(forms.Form):
     acc_number = forms.CharField(initial='MB000'+get_random_string(length=15,allowed_chars="1234567890"))
     balance = forms.DecimalField(decimal_places=2)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['acc_number'].initial = 'MB000' + get_random_string(length=15, allowed_chars="1234567890")
 
 class TransfermoneyForm(forms.Form):
 
