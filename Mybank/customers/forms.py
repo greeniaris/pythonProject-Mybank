@@ -22,6 +22,6 @@ class CreateAccountForm(forms.Form):
 
 class TransfermoneyForm(forms.Form):
 
-    sender_acc = forms.CharField(initial='')
+    sender_acc = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
     recepient_acc = forms.CharField(max_length=20)
     ammount = forms.DecimalField(decimal_places=2)
