@@ -104,6 +104,8 @@ def send_balance(request):
             messages.error(request, 'Λαθος στοιχεια')
         return redirect('transfer3')
     return redirect('transfer3')
+
+
 @login_required()
 def my_transactions(request):
     user = request.user
@@ -119,6 +121,7 @@ def my_transactions(request):
     }
     return render(request, 'mytransactions.html', context)
 
+@login_required()
 def account(request, acc_number):
     query = Accounts.objects.get(acc_number = acc_number)
     saw_me = Transactions.objects.filter((Q(sender_acc=query) | Q(recipient_acc=query)))
@@ -132,9 +135,9 @@ def account(request, acc_number):
     }
     return render(request, 'account.html', context=context)
 
+@login_required()
 def send_moneys(request, acc_number):
     form = TransfermoneyForm(initial={'sender_acc': acc_number})
-
     if request.method == 'POST':
         form = TransfermoneyForm(request.POST)
         if form.is_valid():
